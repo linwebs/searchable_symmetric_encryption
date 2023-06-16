@@ -1,0 +1,315 @@
+{% extends "html.jinja2" %}
+
+{% block main %}
+	<div class="container">
+		<div class="card my-5">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-6 align-self-center">
+						<h1 class="h3">Searchable Encryption</h1>
+					</div>
+					<div class="col-6 text-end">
+						<a href="/" class="btn m-2">Index</a>
+						<a href="#" class="btn btn-warning m-2">Search</a>
+						<a href="/en_decrypt" class="btn m-2">Encrypt / Decrypt</a>
+						<a href="/data" class="btn m-2">Data</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card my-5">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Bracket
+					</div>
+					<div class="col-10">
+						<button class="btn btn-warning m-2 brackets_group" id="left_bracket">(</button>
+						<button class="btn btn-warning m-2 brackets_group" id="right_bracket">)</button>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Keyword
+					</div>
+					<div class="col-10">
+						<button class="btn btn-warning m-2 properties_group" id="birth_date">birthDate</button>
+						<button class="btn btn-warning m-2 properties_group" id="first_name">firstName</button>
+						<button class="btn btn-warning m-2 properties_group" id="last_name">lastName</button>
+						<button class="btn btn-warning m-2 properties_group" id="street">street</button>
+						<button class="btn btn-warning m-2 properties_group" id="house_number">houseNum</button>
+						<button class="btn btn-warning m-2 properties_group" id="city">city</button>
+						<button class="btn btn-warning m-2 properties_group" id="country">country</button>
+						<button class="btn btn-warning m-2 properties_group" id="postCode">postCode</button>
+						<button class="btn btn-warning m-2 properties_group" id="type_of">type</button>
+						<button class="btn btn-warning m-2 properties_group" id="temperature">temperature</button>
+						<button class="btn btn-warning m-2 properties_group" id="heart_rate">heartRate</button>
+						<button class="btn btn-warning m-2 properties_group" id="systolic">systolic</button>
+						<button class="btn btn-warning m-2 properties_group" id="diastolic">type</button>
+						<button class="btn btn-warning m-2 properties_group" id="sp_o2">spO2</button>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Operator
+					</div>
+					<div class="col-10">
+						<button class="btn btn-warning m-2 operators_group" id="eq">=</button>
+						<button class="btn btn-warning m-2 operators_group" id="ne">≠</button>
+						<button class="btn btn-warning m-2 operators_group" id="lt"><</button>
+						<button class="btn btn-warning m-2 operators_group" id="lte">≤</button>
+						<button class="btn btn-warning m-2 operators_group" id="gt">></button>
+						<button class="btn btn-warning m-2 operators_group" id="gte">≥</button>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Conjunction
+					</div>
+					<div class="col-10">
+						<button class="btn btn-warning m-2 conjunction_group" id="and_button">AND</button>
+						<button class="btn btn-warning m-2 conjunction_group" id="or_button">OR</button>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Value
+					</div>
+					<div class="col-8 align-self-center">
+						<input type="text" class="form-control value_group" id="val_input">
+					</div>
+					<div class="col-2">
+						<button class="btn btn-warning m-2 value_group" id="done_button">Done</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card my-5">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Query
+					</div>
+					<div class="col-10">
+						<code id="query_label"></code>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2 align-self-center">
+						Action
+					</div>
+					<div class="col-10">
+						<button class="btn btn-warning m-2" id="search_button">Search</button>
+						<button class="btn btn-warning m-2" id="clear_button">Clear</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="card my-5" id="result">
+			<div class="card-body">
+				<div>
+					Documents matching query: <span id="match_label"></span>
+				</div>
+				<hr>
+				<div>
+					Processing time: <span id="time_label"></span> ms
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="error_modal" tabindex="-1" aria-labelledby="modal_label" aria-hidden="true"
+		 data-bs-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="modal_label">Error</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+							id="modal_close"></button>
+				</div>
+				<div class="modal-body" id="modal_text"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script>
+		var query_text = '';
+		var last_clicked_property = null;
+		var last_clicked = null;
+		const error_modal_element = document.getElementById('error_modal');
+		var error_modal = new bootstrap.Modal(error_modal_element, {})
+
+		$(document).ready(function () {
+			$('.operators_group').prop('disabled', true);
+			$('.conjunction_group').prop('disabled', true);
+			$('.value_group').prop('disabled', true);
+			$('#result').css("visibility", "hidden");
+		});
+
+		$('.brackets_group').click(function () {
+			last_clicked = $(this).text();
+			query_text = query_text + $(this).text() + ' ';
+			console.log("query: " + query_text);
+			$('#query_label').html(query_text);
+		});
+
+		$('.properties_group').click(function () {
+			$('.properties_group').prop('disabled', true);
+			$('.brackets_group').prop('disabled', true);
+			$('.operators_group').prop('disabled', false);
+
+			last_clicked = $(this).text();
+			last_clicked_property = $(this).text();
+			query_text = query_text + $(this).text() + ' ';
+			console.log("query: " + query_text);
+			$('#query_label').html(query_text);
+		});
+
+		$('.operators_group').click(function () {
+			$('.operators_group').prop('disabled', true);
+			$('.value_group').prop('disabled', false);
+			$('#val_input').val('');
+			$('#val_input').prop('placeholder', type_of_var(last_clicked_property)[1]);
+
+
+			last_clicked = $(this).text();
+			query_text = query_text + $(this).text() + ' ';
+			console.log("query: " + query_text);
+			$('#query_label').html(query_text);
+		});
+
+		$('.conjunction_group').click(function () {
+			$('.conjunction_group').prop('disabled', true);
+			$('.properties_group').prop('disabled', false);
+
+			last_clicked = $(this).text();
+			$('#modal_text').html("");
+			query_text = query_text + $(this).text() + ' ';
+			console.log("query: " + query_text);
+			$('#query_label').html(query_text);
+		});
+
+		$('#done_button').click(function () {
+			var value = $('#val_input').val();
+			var cont = true;
+			type_of_variable = type_of_var(last_clicked_property)[0]
+
+			if (type_of_variable == 'd') {
+				if (!is_valid_date(value)) {
+					$('#modal_text').html("Value should be date.");
+					error_modal.show();
+					cont = false;
+				}
+			}
+
+			if (type_of_variable == 'n') {
+				if (!Number(value)) {
+					$('#modal_text').html("Value should be number with dot separator.");
+					error_modal.show();
+					cont = false;
+				}
+			}
+
+			if (cont) {
+				$('#val_input').prop('placeholder', '');
+
+				last_clicked = $(this).text();
+				query_text = query_text + value + ' ';
+				console.log("query: " + query_text);
+
+				$('#query_label').html(query_text);
+				$('.value_group').prop('disabled', true);
+				$('.conjunction_group').prop('disabled', false);
+				$('.brackets_group').prop('disabled', false);
+			}
+		});
+
+		$('#clear_button').click(function () {
+			last_clicked = null;
+			last_clicked_property = null;
+			query_text = ' ';
+			$('#result').css("visibility", "hidden");
+
+			$('#val_input').val('');
+			$('#val_input').prop('placeholder', '');
+
+			$('#query_label').html(query_text);
+			$('#modal_text').html("Value should be number with dot separator.");
+			$('.conjunction_group').prop('disabled', true);
+			$('.operators_group').prop('disabled', true);
+			$('.brackets_group').prop('disabled', false);
+			$('.properties_group').prop('disabled', false);
+		});
+
+
+		$('#search_button').click(function () {
+			$('#result').css("visibility", "hidden");
+			$('#modal_close').css("visibility", "hidden");
+			$('#modal_label').html('Loading...');
+			$('#modal_text').html('Query: <code>' + query_text + '</code>');
+			error_modal.show();
+
+			error_modal_element.addEventListener('shown.bs.modal', event => {
+				$.post("/search", {
+					query: query_text
+				}, function (result) {
+					$('#modal_label').html('Error');
+					$('#modal_close').css("visibility", "");
+					if (result.status === 1) {
+						error_modal.hide();
+						$('#modal_text').html('');
+
+						$('#match_label').html(result.match);
+						$('#time_label').html(result.time);
+						$('#result').css("visibility", "");
+					} else {
+						$('#modal_text').html(result.message);
+					}
+				});
+			})
+		});
+
+		function type_of_var(string) {
+			dates = ['birthDate']
+			numbers = ['houseNum', 'postCode', 'temperature', 'heartRate', 'diastolic', 'systolic', 'spO2']
+			strings = ['firstName', 'lastName', 'street', 'country', 'city', 'type']
+
+			console.log("type: " + string);
+
+			if (dates.includes(string)) {
+				return ['d', 'EX: YYYY-MM-DD']
+			} else if (numbers.includes(string)) {
+				return ['n', 'EX: 35.3']
+			} else if (strings.includes(string)) {
+				return ['s', 'EX: some string']
+			}
+		}
+
+		function is_valid_date(date_str) {
+			var regEx = /^\d{4}-\d{2}-\d{2}$/;
+
+			if (!date_str.match(regEx)) {
+				// Invalid format
+				return false;
+			}
+			var d = new Date(date_str);
+			var dNum = d.getTime();
+			if (!dNum && dNum !== 0) {
+				// NaN value, Invalid date
+				return false;
+			}
+			return d.toISOString().slice(0, 10) === date_str;
+		}
+	</script>
+{% endblock %}

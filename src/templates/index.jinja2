@@ -1,10 +1,46 @@
-{% extends "head.jinja2" %}
+{% extends "html.jinja2" %}
 
 {% block main %}
-	<div class="container my-5">
-		<div class="card">
+	<div class="container">
+		<div class="card my-5">
 			<div class="card-body">
-				Index
+				<div class="row">
+					<div class="col-6 align-self-center">
+						<h1 class="h3">Searchable Encryption</h1>
+					</div>
+					<div class="col-6 text-end">
+						<a href="#" class="btn btn-warning m-2">Index</a>
+						<a href="/search" class="btn m-2">Search</a>
+						<a href="/en_decrypt" class="btn m-2">Encrypt / Decrypt</a>
+						<a href="/data" class="btn m-2">Data</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4 px-2">
+				<div class="card">
+					<a href="" class="index-button card-body text-center">
+						Search
+					</a>
+				</div>
+			</div>
+
+			<div class="col-4 px-2">
+				<div class="card">
+					<a href="/en_decrypt" class="index-button card-body text-center">
+						Encrypt / Decrypt
+					</a>
+				</div>
+			</div>
+
+			<div class="col-4 px-2">
+				<div class="card">
+					<a href="/data" class="index-button card-body text-center">
+						Data
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

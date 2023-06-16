@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>{% block main %}{% endblock %}</body>
-	<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<body>
+<div>
+{% block main %}{% endblock %}
+</div>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-3.7.0.min.js') }}"></script>
+{% block script %}{% endblock %}
+</body>
 </html>

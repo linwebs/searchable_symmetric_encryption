@@ -1,0 +1,30 @@
+html, body {
+	background-color: #F0EDD4;
+}
+
+.card {
+	background-color: #F9FBE7;
+}
+
+.btn-warning {
+	background-color: #ECCDB4;
+	border-color: #ECCDB4;
+}
+
+.btn-warning:disabled {
+	background-color: #b48c6d;
+	border-color: #b48c6d;
+}
+
+.table>:not(caption)>*>* {
+	background-color: #F9FBE7;
+}
+
+.index-button {
+	text-decoration: none;
+	color: #000000;
+}
+
+.index-button:hover {
+	background-color: #ECCDB4;
+}

@@ -1,10 +1,10 @@
 # Searchable Symmetric Encryption with order preservation
 
-### _About_
+### About
 Searchable Symmetric Encryption enables search over encrypted data.  
 Order preservation gives us possibility to search over encrypted data not only by exact match but also with operators like < and >. 
 
-### _Solution_
+### Solution
 Solution of the problem is based on this [article](https://hcis-journal.springeropen.com/articles/10.1186/s13673-015-0039-9).  
 
 Search steps over encrypted data:
@@ -101,18 +101,11 @@ Encrypted file of Janez Novak should look like this:
 11. Now we have everything prepared to use graphical interface to search over data.
 
 
-### _GUI usage example_ 
-GUI - razloži, kako se zažene in uporablja.
-
-Graphical interface gives you opportunity to search over encrypted data with simple clicking.
-After you click _Search!_ button, query is parsed and execute search over encrypted data.
-Files that match query are copied to _User/encrypted_ folder and then decrypted to _User/decrypted_ folder.
-
-We start GUI by executing _GUI.py_ file in _SSE/src_ directory.  
-![alt gui](images/gui.png "SSE graphical interface")
+### Website example
+![website](images/website.png)
 
 
 * * * 
-In our solution we used Python 3.5.2 and Anaconda 3.
+In my solution we used Python 3.6.13 and Anaconda 3.
 
 

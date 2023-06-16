@@ -1,0 +1,35 @@
+{% extends "html.jinja2" %}
+
+{% block main %}
+	<div class="container">
+		<div class="card my-5">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-6 align-self-center">
+						<h1 class="h3">Searchable Encryption</h1>
+					</div>
+					<div class="col-6 text-end">
+						<a href="/" class="btn m-2">Index</a>
+						<a href="/search" class="btn m-2">Search</a>
+						<a href="/en_decrypt" class="btn m-2">Encrypt / Decrypt</a>
+						<a href="#" class="btn btn-warning m-2">Data</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card my-5">
+			<div class="card-body">
+				<table class="table">
+					{% for file in files %}
+						<tr>
+							<td>
+								<a href="/data?name={{ file }}" class="text-decoration-none text-black">{{ file }}</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
