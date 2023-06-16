@@ -1,8 +1,7 @@
-# Searchable Symmetric Encryption with order preservation
+# Searchable Symmetric Encryption
 
 ### About
-Searchable Symmetric Encryption enables search over encrypted data.  
-Order preservation gives us possibility to search over encrypted data not only by exact match but also with operators like < and >. 
+Please refer to the complete project <https://github.com/linwebs/searchable_encryption.git>.
 
 ### Solution
 Solution of the problem is based on this [article](https://hcis-journal.springeropen.com/articles/10.1186/s13673-015-0039-9).  
@@ -44,10 +43,10 @@ Search steps over encrypted data:
 
 5. Inside _Private/IVs_ directory create json file _ivs.json_ with empty brackets {}.
 
-6. Inside _SSE_ directory copy all files downloaded from github link <https://github.com/markozeman/SSE.git>.
+6. Inside _SSE_ directory copy all files downloaded from github link <https://github.com/linwebs/searchable_symmetric_encryption/tree/web>.
 
 Your directory structure should look something like this:  
-![alt folder_structure](images/folder_structure.png "directory structure")
+![alt folder_structure](images/folder_structure_1.png "directory structure")
 
 7. Inside _SSE/src_ directory execute _create\_patient\_json.py_ file.
 
@@ -95,17 +94,15 @@ ope.encrypt_documents()
 After that your directory structure should look something like this:    
 ![alt folder_structure_4](images/folder_structure_4.png "directory structure")
 
-Encrypted file of Janez Novak should look like this:  
-![alt encrypted_file](images/encrypted_file.png "Janez Novak data encrypted")
+Encrypted file of Leach Mcdaniel should look like this:  
+![alt encrypted_file](images/encrypted_file.png "Leach Mcdaniel data encrypted")
 
-11. Now we have everything prepared to use graphical interface to search over data.
+12. Now we have everything prepared to use website to search over data.
 
 
 ### Website example
 ![website](images/website.png)
 
+---
 
-* * * 
 In my solution we used Python 3.6.13 and Anaconda 3.
-
-
